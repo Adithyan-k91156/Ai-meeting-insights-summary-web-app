@@ -357,6 +357,33 @@ body {
     color: rgb(106, 106, 106);
 }
 
+/* Error Messages */
+.error-message {
+    display: block;
+    color: #ff6b6b;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 6px;
+    margin-left: 4px;
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input-wrapper input.error-input {
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.05);
+}
+
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .login-card {
