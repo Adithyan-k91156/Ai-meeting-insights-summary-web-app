@@ -24,12 +24,14 @@
                         <input type="text" id="name" name="name" placeholder="Full Name">
                         <span class="focus-border"></span>
                     </div>
+                    <span class="error-message" id="nameError"></span>
                 </div>
                 <div class="form-group">
                     <div class="input-wrapper">
                         <input type="email" id="email" name="email" required autocomplete="email" placeholder="Email Address">
                         <span class="focus-border"></span>
                     </div>
+                    <span class="error-message" id="emailError"></span>
                 </div>
 
                 <div class="form-group">
@@ -56,6 +58,98 @@
                     <span class="btn-loader"></span>
                 </button>
             </form>
+
+            <script>
+                const signupForm = document.getElementById('loginForm');
+                const nameInput = document.getElementById('name');
+                const emailInput = document.getElementById('email');
+                const passwordInput = document.getElementById('password');
+                const nameError = document.getElementById('nameError');
+                const emailError = document.getElementById('emailError');
+                const passwordError = document.getElementById('passwordError');
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                function validateName() {
+                    const name = nameInput.value.trim();
+                    if (name === '') {
+                        nameError.textContent = 'Full name is required';
+                        nameInput.style.borderColor = '#ff6b6b';
+                        return false;
+                    }
+                    nameError.textContent = '';
+                    nameInput.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    return true;
+                }
+
+                function validateEmail() {
+                    const email = emailInput.value.trim();
+                    if (email === '') {
+                        emailError.textContent = 'Email is required';
+                        emailInput.style.borderColor = '#ff6b6b';
+                        return false;
+                    } else if (!emailRegex.test(email)) {
+                        emailError.textContent = 'Please enter a valid email address';
+                        emailInput.style.borderColor = '#ff6b6b';
+                        return false;
+                    }
+                    emailError.textContent = '';
+                    emailInput.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    return true;
+                }
+
+                function validatePassword() {
+                    const password = passwordInput.value;
+                    if (password === '') {
+                        passwordError.textContent = 'Password is required';
+                        passwordInput.style.borderColor = '#ff6b6b';
+                        return false;
+                    } else if (password.length < 6) {
+                        passwordError.textContent = 'Password must be at least 6 characters';
+                        passwordInput.style.borderColor = '#ff6b6b';
+                        return false;
+                    }
+                    passwordError.textContent = '';
+                    passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    return true;
+                }
+
+                nameInput.addEventListener('blur', validateName);
+                emailInput.addEventListener('blur', validateEmail);
+                passwordInput.addEventListener('blur', validatePassword);
+
+                nameInput.addEventListener('input', function() {
+                    if (nameError.textContent) {
+                        nameError.textContent = '';
+                        nameInput.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    }
+                });
+
+                emailInput.addEventListener('input', function() {
+                    if (emailError.textContent) {
+                        emailError.textContent = '';
+                        emailInput.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    }
+                });
+
+                passwordInput.addEventListener('input', function() {
+                    if (passwordError.textContent) {
+                        passwordError.textContent = '';
+                        passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    }
+                });
+
+                signupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const okName = validateName();
+                    const okEmail = validateEmail();
+                    const okPassword = validatePassword();
+                    if (okName && okEmail && okPassword) {
+                        console.log('Sign-up form valid');
+                        // this.submit();
+                    }
+                });
+            </script>
 
             <div class="divider">
                 <span>or continue with</span>
