@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Forgot Password</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="header">
+		<img src="logo.png" alt="" class="logo">
+	</div>
+	<div class="content">
+	<div class="login-container">
+		<div class="login-card">
+			<div class="login-header">
+				<h2>Forgot Password</h2>
+				<p>Enter your email and we'll send an OTP to reset your password</p>
+			</div>
+
+			<form class="login-form" id="forgotForm" novalidate>
+				<div class="form-group">
+					<div class="input-wrapper">
+						<input type="email" id="email" name="email" required autocomplete="email" placeholder="Email Address">
+						<span class="focus-border"></span>
+					</div>
+					<span class="error-message" id="emailError"></span>
+				</div>
+
+				<button type="submit" class="login-btn btn">
+					<span class="btn-text">Send OTP</span>
+					<span class="btn-loader"></span>
+				</button>
+			</form>
+
+			<div id="successMessage" style="color: #06b6d4; font-weight:600; text-align:center; margin-top:8px; display:none;">OTP sent successfully</div>
+
+			<div class="divider">
+				<span>or continue with</span>
+			</div>
+
+			<div class="social-login">
+				<button type="button" class="social-btn google-btn">
+					<span class="social-icon google-icon"></span>
+					Google
+				</button>
+				<button type="button" class="social-btn github-btn">
+					<span class="social-icon github-icon"></span>
+					GitHub
+				</button>
+			</div>
+
+			<div class="signup-link">
+				<p>Remembered your password? <a href="login.html">Log in</a></p>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<script>
+		const forgotForm = document.getElementById('forgotForm');
+		const emailInput = document.getElementById('email');
+		const emailError = document.getElementById('emailError');
+		const successMessage = document.getElementById('successMessage');
+
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+		function validateEmail() {
+			const email = emailInput.value.trim();
+			if (email === '') {
+				emailError.textContent = 'Email is required';
+				emailInput.style.borderColor = '#ff6b6b';
+				return false;
+			} else if (!emailRegex.test(email)) {
+				emailError.textContent = 'Please enter a valid email address';
+				emailInput.style.borderColor = '#ff6b6b';
+				return false;
+			}
+			emailError.textContent = '';
+			emailInput.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+			return true;
+		}
+
+		emailInput.addEventListener('blur', validateEmail);
+		emailInput.addEventListener('input', function() {
+			if (emailError.textContent) {
+				emailError.textContent = '';
+				emailInput.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+			}
+			successMessage.style.display = 'none';
+		});
+
+		forgotForm.addEventListener('submit', function(e) {
+			e.preventDefault();
+			const okEmail = validateEmail();
+			if (!okEmail) return;
+
+			// Simulate sending OTP. Replace with real backend call.
+			console.log('Sending OTP to', emailInput.value.trim());
+			successMessage.textContent = 'OTP sent to ' + emailInput.value.trim();
+			successMessage.style.display = 'block';
+		});
+	</script>
+</body>
+</html>
+
